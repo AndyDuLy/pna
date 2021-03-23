@@ -22,6 +22,12 @@ const PORT = process.env.PORT || 5000;
 const routes = require('./routes/index');
 
 const app = express();
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+}
+
+app.options('*', cors(corsOptions));
 app.use(cors({ exposedHeaders: 'x-token' }));
 app.use(express.json());
 
