@@ -23,12 +23,7 @@ const routes = require('./routes/index');
 
 const app = express();
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-}
-
-app.options('*', cors(corsOptions));
-app.use(cors({ exposedHeaders: 'x-token' }));
+app.use(cors({ exposedHeaders: 'x-token', origin: 'http://localhost:3000', }));
 app.use(express.json());
 
 app.use(routes);
