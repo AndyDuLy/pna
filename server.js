@@ -23,10 +23,23 @@ const PORT = process.env.PORT || 80;
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: true,
-  credentials: true,
-}));
+
+app.options('*', cors());
+
+var whitelist = [
+  'http://localhost:3000*',
+];
+
+var corsOptions = {
+  origin: function(origin, callback){
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted);
+  },
+
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 
 app.use(routes);
 
