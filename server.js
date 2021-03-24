@@ -23,15 +23,15 @@ const routes = require('./routes/index');
 
 const app = express();
 
-app.use(cors({ exposedHeaders: 'x-token' }));
+var corsOptions = {
+  exposedHeaders: 'x-token',
+  origin: 'http://localhost:3000',
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use(routes, (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
+app.use(routes);
 app.use('/', (req, res) => {
   res.send("<div> Default endpoint </div>");
 });
