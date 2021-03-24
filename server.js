@@ -19,7 +19,7 @@ mongoose
 const PORT = process.env.PORT || 5000;
 
 // Routes
-const whitelist = [
+/* const whitelist = [
   "http://localhost:3000/login",
 ];
 
@@ -31,20 +31,19 @@ const corsOptions = {
 
   credentials: true,
 };
-
+ */
 const routes = require('./routes/index');
 
 const app = express();
 
 app.use(express.json());
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+app.use(cors());
+app.options('*', cors());
 
-/* app.use((req, res, next) => {
+app.all('/*', (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers", 
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
   
   if (req.method === 'OPTIONS') {
     res.header("Access-Contol-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
@@ -52,7 +51,7 @@ app.use(cors(corsOptions));
   }
 
   next();
-}); */
+});
 
 app.use(routes);
 
