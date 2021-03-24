@@ -27,7 +27,7 @@ app.use(express.json());
 app.options('*', cors());
 
 var corsOptions = {
-  origin: "http://localhost:3000",
+  origin: `${process.env.REACT_APP_ENDPOINT}`,
   credentials: true
 };
 
