@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 
 // Routes
 const whitelist = [
-  "http://localhost:3000",
+  "http://localhost:3000/login",
 ];
 
 const corsOptions = {
@@ -28,7 +28,7 @@ const corsOptions = {
     let originIsWhitelisted = whitelist.indexOf(origin) !== -1;
     callback(null, originIsWhitelisted);
   },
-  
+
   credentials: true,
 };
 
