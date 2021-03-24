@@ -1,8 +1,10 @@
+require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const mongoose = require("mongoose");
-require("dotenv").config();
+
+const routes = require('./routes/index');
 
 
 mongoose
@@ -18,40 +20,13 @@ mongoose
   
 const PORT = process.env.PORT || 80;
 
-// Routes
-/* const whitelist = [
-  "http://localhost:3000",
-];
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    let originIsWhitelisted = whitelist.indexOf(origin) !== -1;
-    callback(null, originIsWhitelisted);
-  },
-
-  credentials: true,
-};
- */
-const routes = require('./routes/index');
-
 const app = express();
 
 app.use(express.json());
-//app.use(cors(corsOptions));
-app.use(cors());
-app.options('*', cors());
-
-app.all('/*', (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  
-  if (req.method === 'OPTIONS') {
-    res.header("Access-Contol-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-    return res.status(200).json({});
-  }
-
-  next();
-});
+app.use(cors({
+  origin: true,
+  credentials: true,
+}));
 
 app.use(routes);
 
