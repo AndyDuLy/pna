@@ -7,11 +7,12 @@ const CREATE = async (req, res) => {
     const { title, content, category, userID } = req.body;
 
     const query = { _id : userID };
+    const uuid = uuidv4();
     
     const updateDocument = {
       $push: {
         todos: {
-          id : uuidv4(),
+          id : uuid,
           title : title,
           content : content,
           category : category,
@@ -22,7 +23,8 @@ const CREATE = async (req, res) => {
     await User.updateOne(query, updateDocument);
   
     res.status(201).send({
-      message: "Todo Created Successfully"
+      message: "Todo Created Successfully",
+      objectID: uuid,
     });
   } catch (err) {
     return res.status(400).json({ error: err.message });
