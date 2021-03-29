@@ -4,7 +4,7 @@ const User = require("../models/user");
 
 const CREATE = async (req, res) => {
   try {
-    const { title, content, category, userID } = req.body;
+    const { title, content, category, categoryColor, userID } = req.body;
 
     const query = { _id : userID };
     const uuid = uuidv4();
@@ -16,6 +16,7 @@ const CREATE = async (req, res) => {
           title : title,
           content : content,
           category : category,
+          colorCode: categoryColor,
         }
       }
     };
