@@ -12,10 +12,13 @@ const CREATE = async (req, res) => {
     const updateDocument = {
       $push: {
         todos: {
-          id : uuid,
-          title : title,
-          content : content,
-          category : category,
+          id: uuid,
+          title: title,
+          content: {
+            done: false,
+            content: content
+          },
+          category: category,
           colorCode: categoryColor,
         }
       }
@@ -48,15 +51,19 @@ const READ = async (req, res) => {
 
 const UPDATE = async (req, res) => {
   try {
-    const { title, content, category, todoID, userID } = req.body;
+    const { title, content, done, category, colorCode, todoID, userID } = req.body;
 
     const query = { _id : userID, "todos.id" : todoID };
 
     const updateDocument = { 
       $set: {
-        "todos.$.title" : title,
-        "todos.$.content" : content,
+        "todos.$.title": title,
+        "todos.$.content": {
+          done: done,
+          content: content,
+        },
         "todos.$.category" : category,
+        "todos.$.colorCode": colorCode,
       }
     };
 
